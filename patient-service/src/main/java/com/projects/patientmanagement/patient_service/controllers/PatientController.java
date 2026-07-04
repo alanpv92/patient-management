@@ -1,4 +1,5 @@
 package com.projects.patientmanagement.patient_service.controllers;
+
 import com.projects.patientmanagement.patient_service.dto.patient.PatientCreationRequestDto;
 import com.projects.patientmanagement.patient_service.dto.patient.PatientResponseDto;
 import com.projects.patientmanagement.patient_service.services.PatientService;
@@ -23,7 +24,8 @@ public class PatientController {
     }
 
     @PostMapping
-    public PatientResponseDto savePatient(@RequestBody @Valid PatientCreationRequestDto patientCreationRequestDto){
+    @ResponseStatus(HttpStatus.CREATED)
+    public PatientResponseDto savePatient(@RequestBody @Valid PatientCreationRequestDto patientCreationRequestDto) {
         return patientService.createPatient(patientCreationRequestDto);
     }
 
