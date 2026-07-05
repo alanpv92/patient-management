@@ -26,8 +26,8 @@ services:
       dockerfile: Dockerfile
     container_name: "billing-service"
     ports:
+      - "8081:8081"
       - "4001:4001"
-      - "9091:9091"
 
 
 
@@ -48,6 +48,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://patient-db:5432/patientdb
       SPRING_DATASOURCE_USERNAME: patientuser
       SPRING_DATASOURCE_PASSWORD: PASS
+      SPRING_GRPC_CLIENT_CHANNELS_BILLING_CHANNEL_ADDRESS: billing-service:4001
+      SPRING_GRPC_CLIENT_DEFAULT_CHANNEL_ADDRESS: "billing-service:4001"
+      SPRING_GRPC_CLIENT_CHANNELS_BILLING_CHANNEL_NEGOTIATION_TYPE: "plaintext"
 
 
 volumes:
