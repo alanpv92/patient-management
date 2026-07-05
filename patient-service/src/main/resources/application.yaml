@@ -8,6 +8,15 @@ spring:
     username: patientuser
     password: PASS
 
+#
+#  grpc:
+#    client:
+#      channels:
+#        billing-channel:
+#          address: static://localhost:4001
+#          negotiation-type: plaintext
+
+
 
 #
 #    datasource:

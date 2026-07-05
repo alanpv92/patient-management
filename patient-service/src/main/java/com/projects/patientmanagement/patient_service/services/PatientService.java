@@ -1,5 +1,7 @@
 package com.projects.patientmanagement.patient_service.services;
 
+import com.patientmangement.billing.BillingServiceGrpc;
+import com.patientmangement.billing.CreateBillingAccountRequest;
 import com.projects.patientmanagement.patient_service.dto.patient.PatientCreationRequestDto;
 import com.projects.patientmanagement.patient_service.dto.patient.PatientResponseDto;
 import com.projects.patientmanagement.patient_service.exceptions.PatientAlreadyRegisteredException;
@@ -20,6 +22,7 @@ public class PatientService {
 
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
+    private final BillingServiceGrpc.BillingServiceBlockingStub billingServiceBlockingStub;
 
     public Optional<PatientEntity> getPatientByEmail(String email) {
         return patientRepository.findByEmail(email);
@@ -29,6 +32,8 @@ public class PatientService {
         if (patientRepository.findByEmail(patientCreationRequestDto.getEmail()).isPresent()) {
             throw new PatientAlreadyRegisteredException(ErrorMessageConstants.PATIENT_NOT_FOUND);
         }
+        final var response = billingServiceBlockingStub.createBillingAccount(CreateBillingAccountRequest.newBuilder().setPatientId("1").setEmail("alan").setName("alan2").build());
+        System.out.println("the response is"+response);
         return patientMapper.fromEntity(patientRepository.save(patientMapper.fromDto(patientCreationRequestDto)));
     }
 
