@@ -95,6 +95,17 @@ services:
       - "8002:8080"
 
 
+  gateway-service:
+    build:
+      context: ../gateway
+      dockerfile: Dockerfile
+
+    ports:
+      - "7000:7000"
+    depends_on:
+      patient-service:
+        condition: service_started
+
 volumes:
   patient-db-data:
     driver: local
